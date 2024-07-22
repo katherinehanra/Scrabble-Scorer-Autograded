@@ -30,16 +30,35 @@ function oldScrabbleScorer(word) {
 // don't change the names or your program won't work as expected. //
 
 function initialPrompt() {
-  let userPrompt1 = input.question("Let's play some Scrabble! Enter a word: ");
-  console.log(oldScrabbleScorer(userPrompt1));
-  return userPrompt1;
+  let word = input.question("Let's play some Scrabble! Enter a word: ");
+  //console.log(oldScrabbleScorer(word));
+  console.log(simpleScorer(word));
+  console.log(vowelBonusScorer(word));
+  return word;
 }
 
 let newPointStructure;
 
-let simpleScorer;
+let simpleScorer = function (word) {
+  let score = 0;
+  for (let i = 0; i < word.length; i++) {
+    score++;
+  }
+  return score;
+};
 
-let vowelBonusScorer;
+let vowelBonusScorer = function (word) {
+  let score = 0;
+  const vowels = ["a", "e", "i", "o", "u"];
+  for (let i = 0; i < word.length; i++) {
+    if (vowels.includes(word[i].toLowerCase())) {
+      score += 3;
+    } else {
+      score += 1;
+    }
+  }
+  return score;
+};
 
 let scrabbleScorer;
 
