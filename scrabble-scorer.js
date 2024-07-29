@@ -31,9 +31,6 @@ function oldScrabbleScorer(word) {
 
 function initialPrompt() {
   let word = input.question("Let's play some Scrabble! Enter a word: ");
-  //console.log(oldScrabbleScorer(word));
-  console.log(simpleScorer(word));
-  console.log(vowelBonusScorer(word));
   return word;
 }
 
@@ -62,14 +59,56 @@ let vowelBonusScorer = function (word) {
 
 let scrabbleScorer;
 
-const scoringAlgorithms = [];
+const scoringAlgorithms = [
+  {
+    name: "Simple Score",
+    description: "Each letter is worth 1 point.",
+    scorerFunction: simpleScorer,
+  },
+  {
+    name: "Bonus Vowels",
+    description: "Vowels are 3 pts, consonants are 1 pt.",
+    scorerFunction: vowelBonusScorer,
+  },
+  {
+    name: "Scrabble",
+    description: "The traditional scoring algorithm.",
+    scorerFunction: oldScrabbleScorer,
+  },
+];
 
-function scorerPrompt() {}
+function scorerPrompt(word) {
+  let scorerSelection = input.question(
+    "Which scoring algorithm would you like to use? \n\n0 - Simple: One point per character\n1 - Vowel Bonus: Vowels are worth 3 points\n2 - Scrabble: Uses scrabble point system\nEnter 0, 1, or 2: "
+  );
+  if (scorerSelection === "0") {
+    console.log(
+      `Score for '${word}:`,
+      scoringAlgorithms[0].scorerFunction(word)
+    );
+  } else if (scorerSelection === "1") {
+    console.log(
+      `Score for '${word}:`,
+      scoringAlgorithms[1].scorerFunction(word)
+    );
+  } else if (scorerSelection === "2") {
+    console.log(
+      `Score for '${word}:`,
+      scoringAlgorithms[2].scorerFunction(word)
+    );
+  } else {
+    console.log("\nInvalid Selection.");
+    console.log(scorerPrompt(word));
+  }
+
+  return scorerSelection;
+}
 
 function transform() {}
 
 function runProgram() {
-  initialPrompt();
+  let word = initialPrompt();
+  scorerPrompt(word);
 }
 
 // Don't write any code below this line //
